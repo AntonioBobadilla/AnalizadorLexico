@@ -1,6 +1,14 @@
-defmodule Matriz(a,b) do
+defmodule Matriz(a,'bola',:atomo) do
     def net1 do
-  
+    @modulo
+    ~N[2901-12-02 13:56:09:09]
+    1 && 1.1
+    1 &&& 1.1
+    ~~expr
+    ~~~expr
+    left ||| right
+    left <<< right
+    integer() &&& integer() :: integer()
     [[0,0,	0,	0,	0,	0,	1,	0,	0,	0, 0],
     [0,	0,	0,	0,	0,	0,	0,	1,	0,	1,	0],
     [0,	0,	0,	0,	0,	0,	0,	0,	1,	1,	0],
@@ -13,7 +21,7 @@ defmodule Matriz(a,b) do
     [0,	0,	0,	1,	1,	0,	0,	0,	0,	0,	0],
     [0,	0,	0,	0,	0,	1,	0,	0,	0,	0,	0]]
     end
-    def control(_,[]), do true
+    def control(_,[]), do: true
     def mapa do
       %{
         A => 6,
@@ -29,38 +37,38 @@ defmodule Matriz(a,b) do
         P5 => 5
       }
     end
-  
+
     def paresord do
     [[P0, A],[A,P1],[A,P2],[P1,B],[P1,D],[P2,C],[P2,D],[D,P3],[D,P4],[C,P4],[P3,E],[P4,E],[E,P5],[B,P3]]
     end
-  
+
     def preset(net,node) do
       Enum.filter(net,fn [_,destino]-> destino == node end) |> Enum.map(fn [origen,_] -> origen end) |> MapSet.new
     end
-  
-  
+
+
     def m0 do
       MapSet.new([P0])
     end
-  
+
     def poset(net,node) do
       Enum.filter(net,fn [origen,_]-> origen == node end) |> Enum.map(fn [_,destino] -> destino  end) |> MapSet.new
     end
-  
-  
-    def fire(net,trans,marking) do
-      if MapSet.subset?(preset(net,trans), marking) do 
+
+
+    def fire(net,trans,:marking) do
+      if MapSet.subset?(preset(net,trans), marking) do
         MapSet.difference(marking, preset(net,trans)) |> MapSet.union(poset(net,trans))
       else
         marking
       end
     end
-  
+
     def convertir(map) do
       a = MapSet.to_list(map)
       a
     end
-  
+
     def getpos(net,marking) do
       [a|b] = marking
       if b != [] do
@@ -71,9 +79,9 @@ defmodule Matriz(a,b) do
         posa = poset(net,a)
         posa
       end
-  
+
     end
-  
+
     def getpres(net,trans) do
       if trans != [] do
         [a|b] = trans
@@ -82,32 +90,33 @@ defmodule Matriz(a,b) do
         [] # este es un comment
       end
     end
-  
-  
+
+
     def enabl(net,marking) do
       trans = getpos(net,marking)
       trans = convertir(trans)
-      pres = getpres(net,trans) 
-      marking = MapSet.new(marking) 
-      pres = MapSet.new(pres) 
-      pres = MapSet.intersection(pres,marking) 
+      pres = getpres(net,trans)
+      marking = MapSet.new(marking)
+      pres = MapSet.new(pres)
+      pres = MapSet.intersection(pres,marking)
       pres
     end
-  
-  
+
+
      def enablement(net,marking) do
        trans = getpos(net,marking)
        if MapSet.subset?(,marking) do
-  
+
        end
      end
-  
-  
-  
-  
-  
+
+
+
+
+
     def enablement(net,marking) do
        if length(marking) == 1 do
+         :hola
          marking = hd(marking)
          trans = poset(net,marking)
          marking = MapSet.new([marking])
@@ -116,6 +125,8 @@ defmodule Matriz(a,b) do
            [trans]
          else
            nil
+           true
+           false
          end
        else
           [a|b]
@@ -128,8 +139,7 @@ defmodule Matriz(a,b) do
             nil
           end
        end
-  
+
     end
-  
+
   end
-  
